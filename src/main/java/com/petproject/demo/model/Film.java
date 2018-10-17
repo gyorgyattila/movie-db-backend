@@ -9,21 +9,29 @@ public class Film {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
+    private String title;
     @ElementCollection
     private List<String> genres = new ArrayList<>();
-    private Long film_id;
-    private String posterPath;
+    @Column(name = "film_id")
+    private Long id;
+    private String poster_path;
     private float vote_average;
-    private String overwiev;
+    @Column(columnDefinition = "text")
+    private String overview;
     @OneToMany
     private List<Comment> comment = new ArrayList<>();
+    private float popularity;
 
-    public Film(List<String> genres, Long film_id, String posterPath, float vote_average, String overwiev) {
+    public Film(List<String> genres, Long id, String poster_path, float vote_average, String overview, String title) {
         this.genres = genres;
-        this.film_id = film_id;
-        this.posterPath = posterPath;
+        this.id = id;
+        this.poster_path = poster_path;
         this.vote_average = vote_average;
-        this.overwiev = overwiev;
+        this.overview = overview;
+        this.title = title;
+    }
+
+    public Film() {
     }
 
     public List<String> getGenres() {
@@ -34,20 +42,20 @@ public class Film {
         this.genres = genres;
     }
 
-    public Long getFilm_id() {
-        return film_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setFilm_id(Long film_id) {
-        this.film_id = film_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getPosterPath() {
-        return posterPath;
+    public String getPoster_path() {
+        return poster_path;
     }
 
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
     }
 
     public float getVote_average() {
@@ -58,12 +66,12 @@ public class Film {
         this.vote_average = vote_average;
     }
 
-    public String getOverwiev() {
-        return overwiev;
+    public String getOverview() {
+        return overview;
     }
 
-    public void setOverwiev(String overwiev) {
-        this.overwiev = overwiev;
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
     public List<Comment> getComment() {
@@ -72,5 +80,29 @@ public class Film {
 
     public void setComment(List<Comment> comment) {
         this.comment = comment;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public float getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(float popularity) {
+        this.popularity = popularity;
     }
 }
