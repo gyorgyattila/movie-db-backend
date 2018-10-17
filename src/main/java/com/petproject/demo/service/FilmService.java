@@ -8,5 +8,5 @@ import retrofit2.http.Query;
 public interface FilmService {
 
     @GET("now_playing")
-    Call<MovieApiResult> getFilms(@Query("api_key") String apikey);
+    Call<MovieApiResult> getFilms(@Query("api_key") String apikey, @Query("page") int page, @Query("region") String region);
 }
