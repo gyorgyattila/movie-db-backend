@@ -11,7 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -63,13 +66,27 @@ public class FilmRest {
         logger.info("DB is Ready");
     }
 
-    @GetMapping("/")
+    @CrossOrigin
+    @GetMapping("/topFourFilms")
     public List<Film> getIndexPage() {
-        List<Film> topFiveFilms = filmRepository.getTopFiveFilms();
-//        String element = gson.toJson(
-//                topFiveFilms,
-//                new TypeToken<ArrayList<Film>>() {}.getType());
-//        JSONArray list = new JSONArray(element);
-        return topFiveFilms;
+        List<Film> topFourFilms = filmRepository.getTopFourFilms();
+        return topFourFilms;
     }
+
+    @CrossOrigin
+    @GetMapping("/now-playing")
+    public List<Film> getNowPlayingFilms() {
+        List<Film> nowPlaying = filmRepository.getAllNowPlayingFilms();
+        return nowPlaying;
+    }
+
+    @CrossOrigin
+    @GetMapping("/film/{id}")
+    public Film getFilm(@PathVariable("id") String id) {
+        Film film = filmRepository.getFilmBYFilmID(Integer.parseInt(id));
+        return film;
+    }
+
+
+
 }
