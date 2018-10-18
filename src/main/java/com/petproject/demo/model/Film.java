@@ -11,9 +11,9 @@ public class Film {
     private int ID;
     private String title;
     @ElementCollection
-    private List<String> genres = new ArrayList<>();
+    private List<String> genre_ids = new ArrayList<>();
     @Column(name = "film_id")
-    private Long id;
+    private int id;
     private String poster_path;
     private float vote_average;
     @Column(columnDefinition = "text")
@@ -22,8 +22,8 @@ public class Film {
     private List<Comment> comment = new ArrayList<>();
     private float popularity;
 
-    public Film(List<String> genres, Long id, String poster_path, float vote_average, String overview, String title) {
-        this.genres = genres;
+    public Film(List<String> genre_ids, int id, String poster_path, float vote_average, String overview, String title) {
+        this.genre_ids = genre_ids;
         this.id = id;
         this.poster_path = poster_path;
         this.vote_average = vote_average;
@@ -34,19 +34,19 @@ public class Film {
     public Film() {
     }
 
-    public List<String> getGenres() {
-        return genres;
+    public List<String> getGenre_ids() {
+        return genre_ids;
     }
 
-    public void setGenres(List<String> genres) {
-        this.genres = genres;
+    public void setGenre_ids(List<String> genre_ids) {
+        this.genre_ids = genre_ids;
     }
 
-    public Long getId() {
+    public int getFilmId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setFilmId(int id) {
         this.id = id;
     }
 
@@ -104,5 +104,20 @@ public class Film {
 
     public void setPopularity(float popularity) {
         this.popularity = popularity;
+    }
+
+    @Override
+    public String toString() {
+        return "Film{" +
+                "ID=" + ID +
+                ", title='" + title + '\'' +
+                ", genre_ids=" + genre_ids +
+                ", id=" + id +
+                ", poster_path='" + poster_path + '\'' +
+                ", vote_average=" + vote_average +
+                ", overview='" + overview + '\'' +
+                ", comment=" + comment +
+                ", popularity=" + popularity +
+                '}';
     }
 }
