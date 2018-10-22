@@ -1,24 +1,33 @@
 package com.petproject.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private int ID;
     private String comment;
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private Users user;
     @ManyToOne
     @JoinColumn(name = "film_id")
-    private Film film;
+    @JsonIgnore
+    private Film filmId;
+    @JsonIgnore
+    private int voteNumber;
 
-    public Comment(String comment, Users user, Film film) {
+    public Comment(String comment, Film filmId) {
         this.comment = comment;
-        this.user = user;
-        this.film = film;
+        this.filmId = filmId;
+    }
+
+    public Comment() {
     }
 
     public int getID() {
@@ -45,11 +54,22 @@ public class Comment {
         this.user = user;
     }
 
-    public Film getFilm() {
-        return film;
+    public Film getFilmId() {
+        return filmId;
     }
 
-    public void setFilm(Film film) {
-        this.film = film;
+    public void setFilmId(Film filmId) {
+        this.filmId = filmId;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "ID=" + ID +
+                ", comment='" + comment + '\'' +
+                ", user=" + user +
+                ", filmId=" + filmId +
+                ", voteNumber=" + voteNumber +
+                '}';
     }
 }

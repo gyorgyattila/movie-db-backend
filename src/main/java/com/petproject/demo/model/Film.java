@@ -7,20 +7,19 @@ import java.util.List;
 @Entity
 public class Film {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    @Column(name = "film_id")
+    private int id;
     private String title;
     @ElementCollection
     private List<String> genre_ids = new ArrayList<>();
-    @Column(name = "film_id")
-    private int id;
     private String poster_path;
     private float vote_average;
     @Column(columnDefinition = "text")
     private String overview;
-    @OneToMany
+    @OneToMany(mappedBy = "filmId")
     private List<Comment> comment = new ArrayList<>();
     private float popularity;
+    private float mymdbRate;
 
     public Film(List<String> genre_ids, int id, String poster_path, float vote_average, String overview, String title) {
         this.genre_ids = genre_ids;
@@ -82,13 +81,13 @@ public class Film {
         this.comment = comment;
     }
 
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
+//    public int getID() {
+//        return ID;
+//    }
+//
+//    public void setID(int ID) {
+//        this.ID = ID;
+//    }
 
     public String getTitle() {
         return title;
@@ -109,15 +108,22 @@ public class Film {
     @Override
     public String toString() {
         return "Film{" +
-                "ID=" + ID +
+//                "ID=" + ID +
                 ", title='" + title + '\'' +
                 ", genre_ids=" + genre_ids +
                 ", id=" + id +
                 ", poster_path='" + poster_path + '\'' +
                 ", vote_average=" + vote_average +
                 ", overview='" + overview + '\'' +
-                ", comment=" + comment +
                 ", popularity=" + popularity +
                 '}';
+    }
+
+    public float getMymdbRate() {
+        return mymdbRate;
+    }
+
+    public void setMymdbRate(float mymdbRate) {
+        this.mymdbRate = mymdbRate;
     }
 }

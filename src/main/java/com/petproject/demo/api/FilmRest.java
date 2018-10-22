@@ -2,7 +2,9 @@ package com.petproject.demo.api;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.petproject.demo.model.Comment;
 import com.petproject.demo.model.Film;
+import com.petproject.demo.repository.CommentRepository;
 import com.petproject.demo.repository.FilmRepository;
 import com.petproject.demo.service.FilmService;
 import org.json.simple.JSONArray;
@@ -12,17 +14,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.HTTP;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Comment;
 
 @RestController
 public class FilmRest {
@@ -32,9 +37,10 @@ public class FilmRest {
 
     @Autowired
     FilmRepository filmRepository;
-
     @Autowired
     Gson gson;
+    @Autowired
+    CommentRepository commentRepository;
 
 
     Retrofit getRetrofit(String url) {
@@ -44,7 +50,7 @@ public class FilmRest {
         return retrofitBuilder.build();
     }
 
-    @EventListener(ApplicationReadyEvent.class)
+    //@EventListener(ApplicationReadyEvent.class)
     public void getFilms() {
         Retrofit retrofit = getRetrofit(URL);
         FilmService filmService = retrofit.create(FilmService.class);
@@ -86,7 +92,5 @@ public class FilmRest {
         Film film = filmRepository.getFilmBYFilmID(Integer.parseInt(id));
         return film;
     }
-
-
 
 }
