@@ -81,13 +81,6 @@ public class Film {
         this.comment = comment;
     }
 
-//    public int getID() {
-//        return ID;
-//    }
-//
-//    public void setID(int ID) {
-//        this.ID = ID;
-//    }
 
     public String getTitle() {
         return title;
