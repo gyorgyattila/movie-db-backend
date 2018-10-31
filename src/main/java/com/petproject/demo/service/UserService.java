@@ -40,7 +40,6 @@ public class UserService {
         try {
             ResponseEntity<JSONObject> response = restTemplate.exchange(
                     "https://movie-db.eu.auth0.com/userinfo", HttpMethod.GET, entity, JSONObject.class);
-            System.out.println("itt a response: " + response);
             Users user = new Users();
             user.setID(response.getBody().get("sub").toString());
             user.setEmail(response.getBody().get("email").toString());
