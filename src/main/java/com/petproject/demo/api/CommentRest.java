@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class CommentRest {
     @CrossOrigin
     @PostMapping(value = "/{filmId}/add-comment", consumes = "application/json")
     public ResponseEntity addComment(@RequestBody Comment comment, @PathVariable("filmId") int filmId) {
-        commentRepository.save(new Comment(comment.getComment(), filmRepository.getFilmBYFilmID(filmId)));
+        commentRepository.save(new Comment(comment.getComment(), filmRepository.getFilmBYFilmID(filmId), comment.getUserName(), 0));
         logger.info("comment saved to db");
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -37,7 +38,15 @@ public class CommentRest {
     @GetMapping(value = "/{filmId}/get-comments", produces = {"application/json"})
     public List<Comment> getComments(@PathVariable("filmId") String filmId) {
         List<Comment> comments = commentRepository.getCommentsByFilmId(Integer.parseInt(filmId));
-        logger.info("comment recivied from db");
+        logger.info("comments recivied from db");
         return comments;
+    }
+
+    @CrossOrigin
+    @PutMapping(value = "/comments/{id}")
+    public ResponseEntity voteUp(@PathVariable("id") int commentId) {
+        this.commentRepository.incrementVoteNumber(commentId);
+        logger.info("comment saved to db");
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

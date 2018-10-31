@@ -7,29 +7,29 @@ import java.util.List;
 @Entity
 public class Users {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private String id;
     @Column(unique = true, nullable = false)
     private String userName;
     @Column(unique = true, nullable = false)
     private String email;
-    @Column(unique = true, nullable = false)
-    private String password;
     @OneToMany
     private List<Comment> comments = new ArrayList<>();
+    private String picture;
 
-    public Users(String userName, String email, String password) {
+    public Users(String userName, String email) {
         this.userName = userName;
         this.email = email;
-        this.password = password;
     }
 
-    public int getID() {
-        return ID;
+    public Users() {
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public String getID() {
+        return id;
+    }
+
+    public void setID(String ID) {
+        this.id = ID;
     }
 
     public String getUserName() {
@@ -48,19 +48,19 @@ public class Users {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public List<Comment> getComments() {
         return comments;
     }
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }

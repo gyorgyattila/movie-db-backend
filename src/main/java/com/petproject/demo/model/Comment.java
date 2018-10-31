@@ -11,20 +11,19 @@ public class Comment {
     @JsonIgnore
     private int ID;
     private String comment;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private Users user;
+    @JoinColumn(name = "userName")
+    private String userName;
+    private int voteNumber;
     @ManyToOne
     @JoinColumn(name = "film_id")
     @JsonIgnore
     private Film filmId;
-    @JsonIgnore
-    private int voteNumber;
 
-    public Comment(String comment, Film filmId) {
+    public Comment(String comment, Film filmId, String userName, int voteNumber) {
         this.comment = comment;
         this.filmId = filmId;
+        this.userName = userName;
+        this.voteNumber = voteNumber;
     }
 
     public Comment() {
@@ -46,13 +45,6 @@ public class Comment {
         this.comment = comment;
     }
 
-    public Users getUser() {
-        return user;
-    }
-
-    public void setUser(Users user) {
-        this.user = user;
-    }
 
     public Film getFilmId() {
         return filmId;
@@ -62,14 +54,32 @@ public class Comment {
         this.filmId = filmId;
     }
 
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public int getVoteNumber() {
+        return voteNumber;
+    }
+
+    public void setVoteNumber(int voteNumber) {
+        this.voteNumber = voteNumber;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
                 "ID=" + ID +
+                "username " + userName +
                 ", comment='" + comment + '\'' +
-                ", user=" + user +
                 ", filmId=" + filmId +
                 ", voteNumber=" + voteNumber +
                 '}';
     }
+
 }

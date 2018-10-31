@@ -5,10 +5,7 @@ import com.petproject.demo.repository.UserRepository;
 import com.petproject.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -21,6 +18,7 @@ public class UserRest {
     @Autowired
     UserService userService;
 
+    @CrossOrigin
     @GetMapping(value = "/user")
     public ResponseEntity<Users> getUser(@RequestHeader Map<String, String> header) {
         return userService.getUser(header.get("authorization"));
