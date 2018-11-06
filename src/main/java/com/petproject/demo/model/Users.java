@@ -15,6 +15,8 @@ public class Users {
     @OneToMany
     private List<Comment> comments = new ArrayList<>();
     private String picture;
+    @ElementCollection
+    private List<Film> watchList = new ArrayList<>();
 
     public Users(String userName, String email) {
         this.userName = userName;
@@ -62,5 +64,13 @@ public class Users {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public List<Film> getWatchList() {
+        return watchList;
+    }
+
+    public void setWatchList(List<Film> watchList) {
+        this.watchList = watchList;
     }
 }

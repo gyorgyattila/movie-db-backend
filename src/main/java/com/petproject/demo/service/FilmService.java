@@ -2,7 +2,6 @@ package com.petproject.demo.service;
 
 import com.petproject.demo.api.MovieApiResult;
 import com.petproject.demo.api.TrailerResult;
-import org.json.simple.JSONObject;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
