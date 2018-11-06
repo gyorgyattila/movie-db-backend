@@ -43,10 +43,18 @@ public class CommentRest {
     }
 
     @CrossOrigin
-    @PutMapping(value = "/comments/{id}")
+    @PutMapping(value = "/comments/vote-up/{id}")
     public ResponseEntity voteUp(@PathVariable("id") int commentId) {
         this.commentRepository.incrementVoteNumber(commentId);
-        logger.info("comment saved to db");
+        logger.info("voted up");
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @PutMapping(value = "/comments/vote-down/{id}")
+    public ResponseEntity voteDown(@PathVariable("id") int commentId) {
+        this.commentRepository.decrementVoteNumber(commentId);
+        logger.info("voted down");
         return new ResponseEntity(HttpStatus.OK);
     }
 }

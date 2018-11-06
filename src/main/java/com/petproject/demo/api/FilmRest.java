@@ -5,6 +5,8 @@ import com.petproject.demo.model.Film;
 import com.petproject.demo.repository.CommentRepository;
 import com.petproject.demo.repository.FilmRepository;
 import com.petproject.demo.service.FilmService;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ public class FilmRest {
     CommentRepository commentRepository;
 
 
+
     Retrofit getRetrofit(String url) {
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
                 .baseUrl(url)
@@ -39,7 +42,7 @@ public class FilmRest {
         return retrofitBuilder.build();
     }
 
-    @EventListener(ApplicationReadyEvent.class)
+    //@EventListener(ApplicationReadyEvent.class)
     public void getFilms() {
         Retrofit retrofit = getRetrofit(URL);
         FilmService filmService = retrofit.create(FilmService.class);
@@ -48,10 +51,12 @@ public class FilmRest {
         while (page <= maxPage) {
             Call<MovieApiResult> response = filmService.getFilms(System.getenv("apiKey"), page, "US");
             try {
-                List<Film> repos = response.execute().body().getResults();
+                List<Film> films = response.execute().body().getResults();
                 maxPage = response.clone().execute().body().getTotal_pages();
                 page++;
-                for (Film film : repos) {
+                for (Film film : films) {
+                    String trailerKey = getTrailer(String.valueOf(film.getFilmId()));
+                    film.setTrailer("https://www.youtube.com/embed/" + trailerKey);
                     filmRepository.save(film);
                 }
             } catch (IOException e) {
@@ -80,6 +85,23 @@ public class FilmRest {
     public Film getFilm(@PathVariable("id") String id) {
         Film film = filmRepository.getFilmBYFilmID(Integer.parseInt(id));
         return film;
+    }
+
+    private String getTrailer(@PathVariable("id") String id) {
+        Retrofit retrofit = getRetrofit(URL);
+        FilmService filmService = retrofit.create(FilmService.class);
+        Call<TrailerResult> response = filmService.getVideoKey(id, System.getenv("apiKey"));
+        String trailerKey = "";
+        try {
+            List<JSONObject> result = response.execute().body().getResults();
+            if (result.size() > 0) {
+                trailerKey = result.get(0).get("key").toString();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return trailerKey;
     }
 
 }

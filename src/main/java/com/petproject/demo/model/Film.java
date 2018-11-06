@@ -20,6 +20,7 @@ public class Film {
     private List<Comment> comment = new ArrayList<>();
     private float popularity;
     private float mymdbRate;
+    private String trailer;
 
     public Film(List<String> genre_ids, int id, String poster_path, float vote_average, String overview, String title) {
         this.genre_ids = genre_ids;
@@ -118,5 +119,13 @@ public class Film {
 
     public void setMymdbRate(float mymdbRate) {
         this.mymdbRate = mymdbRate;
+    }
+
+    public void setTrailer(String trailer) {
+        this.trailer = trailer;
+    }
+
+    public String getTrailer() {
+        return trailer;
     }
 }

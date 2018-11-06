@@ -11,11 +11,16 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    @Query(value = "SELECT * FROM comment WHERE film_id = :film_id", nativeQuery = true)
+    @Query(value = "SELECT * FROM comment WHERE film_id = :film_id ORDER BY vote_number DESC ", nativeQuery = true)
     List<Comment> getCommentsByFilmId(@Param("film_id") int film_id);
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE comment SET vote_number=vote_number+1 WHERE id=:id", nativeQuery = true)
     void incrementVoteNumber(@Param("id") int id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE comment SET vote_number=vote_number-1 WHERE id=:id", nativeQuery = true)
+    void decrementVoteNumber(@Param("id") int id);
 }
