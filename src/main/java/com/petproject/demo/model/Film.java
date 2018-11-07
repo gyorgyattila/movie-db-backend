@@ -1,5 +1,7 @@
 package com.petproject.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,9 @@ public class Film {
     private float popularity;
     private float mymdbRate;
     private String trailer;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Users> users = new ArrayList<>();
 
     public Film(List<String> genre_ids, int id, String poster_path, float vote_average, String overview, String title) {
         this.genre_ids = genre_ids;
@@ -127,5 +132,13 @@ public class Film {
 
     public String getTrailer() {
         return trailer;
+    }
+
+    public List<Users> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Users> users) {
+        this.users = users;
     }
 }

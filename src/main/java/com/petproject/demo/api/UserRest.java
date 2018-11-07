@@ -2,6 +2,7 @@ package com.petproject.demo.api;
 
 import com.petproject.demo.model.Film;
 import com.petproject.demo.model.Users;
+import com.petproject.demo.repository.FilmRepository;
 import com.petproject.demo.repository.UserRepository;
 import com.petproject.demo.service.UserService;
 import org.slf4j.Logger;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,6 +23,9 @@ public class UserRest {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    FilmRepository filmRepository;
 
     private Logger logger = LoggerFactory.getLogger(FilmRest.class);
 
@@ -35,5 +41,12 @@ public class UserRest {
         userRepository.addToWatchlist(header.get("userid"), Integer.parseInt(filmId));
         logger.info("added to watchlist");
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/get-watchlist/{userid}")
+    public List<Film> getWatchlist(@PathVariable("userid") String userid) {
+        List<Film> films = filmRepository.findDistinctFilmsByUsersId(userid);
+        return films;
     }
 }

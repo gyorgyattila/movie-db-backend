@@ -1,5 +1,7 @@
 package com.petproject.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,7 @@ public class Users {
     @OneToMany
     private List<Comment> comments = new ArrayList<>();
     private String picture;
-    @ElementCollection
+    @ManyToMany
     private List<Film> watchList = new ArrayList<>();
 
     public Users(String userName, String email) {
