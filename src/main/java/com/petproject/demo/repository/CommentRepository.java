@@ -23,4 +23,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Transactional
     @Query(value = "UPDATE comment SET vote_number=vote_number-1 WHERE id=:id", nativeQuery = true)
     void decrementVoteNumber(@Param("id") int id);
+
 }

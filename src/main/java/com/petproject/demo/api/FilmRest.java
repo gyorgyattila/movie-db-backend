@@ -42,7 +42,7 @@ public class FilmRest {
         return retrofitBuilder.build();
     }
 
-    //@EventListener(ApplicationReadyEvent.class)
+    @EventListener(ApplicationReadyEvent.class)
     public void getFilms() {
         Retrofit retrofit = getRetrofit(URL);
         FilmService filmService = retrofit.create(FilmService.class);

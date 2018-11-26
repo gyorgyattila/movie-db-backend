@@ -38,7 +38,7 @@ public class CommentRest {
     @GetMapping(value = "/{filmId}/get-comments", produces = {"application/json"})
     public List<Comment> getComments(@PathVariable("filmId") String filmId) {
         List<Comment> comments = commentRepository.getCommentsByFilmId(Integer.parseInt(filmId));
-        logger.info("comments recivied from db");
+        logger.info("comments received from db");
         return comments;
     }
 

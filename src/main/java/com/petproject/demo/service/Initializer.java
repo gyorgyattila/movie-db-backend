@@ -17,10 +17,10 @@ public class Initializer {
     @Autowired
     FilmRepository filmRepository;
 
-    @PostConstruct
-    public void initializer() {
-        commentRepository.save(new Comment("ez egy comment", filmRepository.getFilmBYFilmID(335983)));
-        commentRepository.save(new Comment("ez egy masik comment", filmRepository.getFilmBYFilmID(335983)));
-
-    }
+//    @PostConstruct
+//    public void initializer() {
+//        commentRepository.save(new Comment("ez egy comment", filmRepository.getFilmBYFilmID(335983)));
+//        commentRepository.save(new Comment("ez egy masik comment", filmRepository.getFilmBYFilmID(335983)));
+//
+//    }
 }

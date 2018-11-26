@@ -3,6 +3,8 @@ package com.petproject.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Comment {
@@ -18,6 +20,9 @@ public class Comment {
     @JoinColumn(name = "film_id")
     @JsonIgnore
     private Film filmId;
+    @OneToMany
+    private List<Vote> votes = new ArrayList<>();
+
 
     public Comment(String comment, Film filmId, String userName, int voteNumber) {
         this.comment = comment;
@@ -82,4 +87,11 @@ public class Comment {
                 '}';
     }
 
+    public List<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
+    }
 }

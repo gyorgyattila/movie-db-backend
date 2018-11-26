@@ -19,6 +19,8 @@ public class Users {
     private String picture;
     @ManyToMany
     private List<Film> watchList = new ArrayList<>();
+    @OneToMany
+    private List<Vote> votes  = new ArrayList<>();
 
     public Users(String userName, String email) {
         this.userName = userName;
@@ -74,5 +76,13 @@ public class Users {
 
     public void setWatchList(List<Film> watchList) {
         this.watchList = watchList;
+    }
+
+    public List<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
     }
 }
